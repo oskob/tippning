@@ -1,0 +1,54 @@
+<form class="register">
+	<h3>Tävlingsregler</h3>
+	<p class="info" style="max-width: 700px;">
+		Insatsen är 100 SEK per person. <br>
+		Resultat för alla matcher måste registreras före den 10:e juni. <br>
+		Endast en tippning per person är tillåten. <br>
+		Lycka till!
+	</p>
+	<h3>Vad heter du?</h3>
+	<input type="text" name="name" id="input-name" class="name">
+
+	<h3>Och den rätta raden?</h3>
+
+	<table class="schedule" cellspacing="0">
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="outcome">1</th>
+			<th class="outcome">X</th>
+			<th class="outcome">2</th>
+
+		</tr>
+		<% for(var key in games) { %>
+
+		<% var game = games[key] %>
+
+		<tr>
+			<td class="date"><%= game[0].getDate() %>:<%= game[0].getDate() == 21 || game[0].getDate() == 22 ? 'a' : 'e' %> juni</td>
+			<td class="team left"><%= game[1] %></td>
+			<td class="vs">–</td>
+			<td class="team right"><%= game[2] %></td>
+			<td class="outcome">
+				<input type="radio" name="outcome-<%= key %>" value="1">
+			</td>
+			<td class="outcome">
+				<input type="radio" name="outcome-<%= key %>" value="X">
+			</td>
+			<td class="outcome">
+				<input type="radio" name="outcome-<%= key %>" value="2">
+			</td>
+		</tr>
+
+		<% } %>
+	</table>
+
+	<p>
+		<input type="checkbox" name="accept" value="accept" class="checkbox" id="accept"> <label for="accept">Jag är säker på att uppgifterna stämmer</label>
+	</p>
+	<p class="center">
+		<input type="submit" value="Skicka" class="submit">
+	</p>
+</form>
