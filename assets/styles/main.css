@@ -83,7 +83,14 @@ header h1
 
 .info
 {
+	font-size: 90%;
 	font-weight: 300;
+}
+
+.info p
+{
+	margin: 0;
+	padding: 3px 0;
 }
 
 .schedule
