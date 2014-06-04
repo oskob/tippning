@@ -1,15 +1,17 @@
-<form class="register">
-	<h3>Tävlingsregler</h3>
+
+<form id="register-form" class="register" method="post" action="/register/submit">
+	<h2>Tävlingsregler</h2>
 	<div class="info">
 		<p><p>Insatsen är 100 kr per person.</p>
-		<p>Pengarna sätts in på konto: 443243243 (Nordea), märk betalningen med ditt namn.</p>
-		<p>Din tippning samt betalning måste vara inne senast den 11:e juni.</p>
+		<p>Kontonummer finns i inbjudningsmailet.</p>
+		<p>Din tippning måste vara registrerad senast den 11:e juni.</p>
 		<p>Endast en tippning per person är tillåten.</p>
 		<p>Flest antal rätt efter sista matchen vinner hela potten.</p>
 		<p>Lycka till!</p>
 	</div>
 	<h3>Vad heter du?</h3>
 	<input type="text" name="name" id="input-name" class="name">
+	<p class="err" id="nameerror" style="display: none;"></p>
 
 	<h3>Och den rätta raden?</h3>
 
@@ -28,7 +30,7 @@
 
 		<% var game = games[key] %>
 
-		<tr>
+		<tr class="input">
 			<td class="date"><%= game[0].getDate() %>:<%= game[0].getDate() == 21 || game[0].getDate() == 22 ? 'a' : 'e' %> juni</td>
 			<td class="team left"><%= game[1] %></td>
 			<td class="vs">–</td>
@@ -37,7 +39,7 @@
 				<input type="radio" name="outcome-<%= key %>" value="1">
 			</td>
 			<td class="outcome">
-				<input type="radio" name="outcome-<%= key %>" value="X">
+				<input type="radio" name="outcome-<%= key %>" value="x">
 			</td>
 			<td class="outcome">
 				<input type="radio" name="outcome-<%= key %>" value="2">
@@ -47,10 +49,180 @@
 		<% } %>
 	</table>
 
+	<p class="err" id="scheduleerror" style="display: none;"></p>
+
 	<p>
-		<input type="checkbox" name="accept" value="accept" class="checkbox" id="accept"> <label for="accept">Jag är säker på att uppgifterna stämmer</label>
+		<input type="checkbox" name="accept" value="accept" class="checkbox" id="accept"> <label for="accept">Jag accepterar tävlingsreglerna</label>
 	</p>
+	<p class="err" id="accepterror" style="display: none;"></p>
+	<p><strong>OBS! Du kan inte ändra din tippning efter att du skickat</strong></p>
 	<p class="center">
 		<input type="submit" value="Skicka" class="submit">
 	</p>
 </form>
+
+<script type="text/javascript">
+
+function showError($element, message)
+{
+	$element.html(message);
+	$element.show();
+}
+
+function validateName(focusError, callback)
+{
+	var valid = true;
+	var name = $.trim($('#input-name').val());
+
+	if(name.length < 5)
+	{
+		showError($('#nameerror'), 'Namnet måste vara minst 5 tecken');
+		if(focusError) 
+		{
+			$('#input-name').focus();
+		}
+		callback(false);
+		valid = false;
+	}
+	else if(name.split(" ").length < 2)
+	{
+		showError($('#nameerror'), 'För och efternamn, tack!');
+		if(focusError) 
+		{
+			$('#input-name').focus();
+		}
+		callback(false);
+		valid = false;
+	}
+
+	if(!valid) return;
+
+	$.ajax('/checkname/' + encodeURIComponent(name), {
+		success: function(response)
+		{
+			var success = response == 'YES';
+			if(!success)
+			{
+				showError($('#nameerror'), 'Namnet är upptaget');
+				if(focusError)
+				{
+					$('#input-name').focus();	
+				} 
+			}
+			else
+			{
+				$('#nameerror').hide();
+			}
+			callback(success);
+		}
+	});
+}
+
+function validateSchedule(focusError, callback)
+{
+	var valid = true;
+	$('.schedule tr').removeClass('row-error');
+
+	$('.schedule tr.input').each(function(i, element)
+	{
+		var rowValid = false;
+		$(element).find('input').each(function(j, input)
+		{
+			if($(input).is(':checked'))
+			{
+				rowValid = true;
+			}
+		});
+		if(!rowValid)
+		{
+			$(element).addClass('row-error');
+			valid = false;
+		}
+	});
+
+	if(!valid)
+	{
+		showError($('#scheduleerror'), 'Du måste fylla i svar för alla matcher');
+	}
+	else
+	{
+		$('#scheduleerror').hide();
+	}
+	callback(valid);
+
+
+}
+
+function validateAccept(focusError, callback)
+{
+	var isChecked = $('#accept').is(':checked');
+	
+	if(!isChecked)
+	{
+		showError($('#accepterror'), 'Du måste acceptera tävlingsreglerna');
+	}
+	else
+	{
+		$('#accepterror').hide();
+	}
+	callback(isChecked);
+
+}
+
+function validateAll(focusError, callback)
+{
+	validateName(focusError, function(valid)
+	{
+		if(!valid)
+		{
+			callback(false);
+			return;
+		}
+		else
+		{
+			validateSchedule(focusError, function(valid)
+			{
+				if(!valid)
+				{
+					callback(false);
+					return;
+				}
+
+				validateAccept(focusError, function(valid)
+				{
+					callback(valid);
+				});
+			});
+		}
+	});
+}
+
+
+$(function()
+{
+	$('#input-name').bind('blur', function()
+	{
+		validateName(false, function(valid){});
+	});
+
+	var validated = false;
+	$('#register-form').bind('submit', function(e)
+	{
+		if(!validated)
+		{
+			e.preventDefault();
+			validateAll(true, function(valid){
+				if(valid)
+				{
+					validated = true;
+					$('#register-form').submit();	
+				}
+			});	
+			return false;
+		}
+		validated = false;
+	});
+	
+});
+
+</script>
