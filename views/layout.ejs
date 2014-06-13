@@ -10,6 +10,21 @@
     <style type="text/css">
       @import url('/styles/vm.css');
     </style>
+    <script type="text/javascript">
+
+      $(function()
+      {
+        $(window).resize(function() {
+          setTimeout(function()
+          {
+            $('header').css('width', $( document ).width());  
+          }, 50);
+        });
+
+        $(window).resize();
+      });
+      
+    </script>
   </head>
   <body>
 

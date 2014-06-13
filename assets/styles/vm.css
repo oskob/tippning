@@ -215,19 +215,9 @@ header h1
 {
 	text-align: right;
 }
-
-.scores-wrap
-{
-
-	position: absolute;
-	left: 0;
-	width: 100%;
-	overflow: scroll;
-}
-
 .scores
 {
-	margin: 0 15%;
+	
 	font-size: 70%;
 	
 }
