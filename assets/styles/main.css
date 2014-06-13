@@ -41,9 +41,10 @@ header
 	background-size: 100%;
 	background-position: center;
 	border-bottom: 1px solid #aaa;
-	padding: 90px 0 90px 0;
+	padding: 0px 0 0px 0;
 	
 	opacity: 0.9;
+	
 
 }
 
@@ -99,7 +100,9 @@ header h1
 
 .page
 {
+	
 	padding: 20px 0;
+	
 }
 
 .register .name
@@ -206,4 +209,75 @@ header h1
 .submit:hover
 {
 	background: #eee;
+}
+
+.scores .team.left
+{
+	text-align: right;
+}
+
+.scores-wrap
+{
+
+	position: absolute;
+	left: 0;
+	width: 100%;
+	overflow: scroll;
+}
+
+.scores
+{
+	margin: 0 15%;
+	font-size: 70%;
+	
+}
+
+.scores .no-result
+{
+	color: #888;
+}
+
+.scores .user
+{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.scores .prediction
+{
+	text-align: center;
+}
+
+.scores .outcome
+{
+	padding-right: 20px;
+}
+
+.scores .outcome,
+.scores .user,
+.scores .prediction
+{
+	border-right: 1px solid #ddd;
+	
+	text-align: center;
+}
+
+.scores .prediction.correct
+{
+	background: #E6FFE4;
+}
+
+.scores .prediction.incorrect
+{
+	background: #FFF2F2;
+}
+.scores tr:hover td
+{
+	background: #fafafa;
+}
+
+.scores td,
+.scores th.user-score
+{
+	border-bottom: 1px solid #ddd;
 }

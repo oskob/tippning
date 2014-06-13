@@ -1,6 +1,49 @@
-<h2>Registrering pågår</h2>
+<div class="scores-wrap">
+	<table class="scores" cellspacing="0">
 
-<p>Välkommen åter den 12:e juni. Då kommer du kunna följa ställningarna här.</p>
+		<tr>
+			<th class="date">Datum</th>
+			<th class="game" colspan="3">Match</th>
+			<th class="outcome">Resultat</th>
 
-<h3>Intresserad av att vara med?</h3>
-<p>Skicka ett mail till <script type="text/javascript">var a = '@'; var b = 'oskar' + a + 'oskob.me'; document.write('<a href="mailto:"' + b + '>' + b + '</a>');</script> så får du instruktioner!</p>
+			<% for(var key in users) { %>
+			<th class="user">
+				<% var user = users[key]; %>
+				<%= user.name.split(' ')[0] %>
+			</th>
+			<% } %>
+
+		</tr>
+		<tr>
+		<td colspan="5" class="outcome"></td>
+		<% for(var key in users) { %>
+		<th class="user user-score">
+			<% var user = users[key]; %>
+			<%= user.score %>
+		</th>
+		<% } %>
+		</tr>
+		<% for(var key in games) { %>
+		<% var game = games[key] %>
+		<tr<% if(!game[3]) { %> class="no-result"<% } %>>
+			<td class="date"><nobr><%= game[0].getDate() %>/6</nobr></td>
+			<td class="team left">
+				<%= game[1]%>
+			</td>
+			<td class="separator"> - </td>
+			<td class="team right">
+				<%= game[2]%>
+			</td>
+			<td class="outcome"><%= game[3] ? game[3] : '' %></td>
+
+			<% for(var userI in users) { %>
+			<% var user = users[userI]; %>
+			<td class="prediction <%= !game[3] ? '' : user.predictions[key].outcome == game[3] ? 'correct' : 'incorrect' %>">
+				<%= user.predictions[key].outcome.toUpperCase() %>
+			</td>
+			<% } %>
+		</tr>
+		<% } %>
+
+	</table>
+</div>
