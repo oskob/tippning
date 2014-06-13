@@ -1,7 +1,7 @@
 body
 {
 	font-family: Arial, sans-serif;
-	font-size: 20px;
+	font-size: 20pt;
 	color: #333;
 	font-family: 'Open Sans', sans-serif;
 	padding: 0;
@@ -34,7 +34,7 @@ input
 	outline: none;
 }
 
-header
+.header
 {
 	background: #d7deca;
 	background-image: url('/images/header.jpg');
@@ -48,13 +48,13 @@ header
 
 }
 
-header .title
+.header .title
 {
 	background: rgba(0, 0, 0, 0.5);
 
 }
 
-header h1
+.header h1
 {
 	
 	background-size: 100% 100%;
@@ -73,7 +73,7 @@ header h1
 	
 }
 
-header h1 small
+.header h1 small
 {
 	
 	font-size: 50%;
@@ -81,7 +81,7 @@ header h1 small
 }
 
 
-header
+.header
 {
 	box-sizing: border-box;
 	min-width: 700px;
@@ -93,7 +93,7 @@ p.err
 }
 
 .wrap,
-header h1
+.header h1
 {
 	margin: 0 15% 0 15%;
 }
