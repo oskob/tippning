@@ -38,7 +38,7 @@ input
 {
 	background: #d7deca;
 	background-image: url('/images/header.jpg');
-	background-size: 100%;
+	background-size: 100% auto;
 	background-position: center;
 	border-bottom: 1px solid #aaa;
 	padding: 0px 0 0px 0;
@@ -95,7 +95,7 @@ p.err
 .wrap,
 .header h1
 {
-	margin: 0 15% 0 15%;
+	margin: 0 200px 0 200px;
 }
 
 .page
