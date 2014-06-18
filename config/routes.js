@@ -55,6 +55,21 @@ module.exports.routes = {
   '/checkname/:name': {
     'controller': 'api',
     'action': 'checkname'
+  },
+
+  '/xxyba/admin': {
+    'controller': 'admin',
+    'action': 'index'
+  },
+
+  'get /xxyba/admin/:gameId': {
+    'controller': 'admin',
+    'action': 'game'
+  },
+
+  'post /xxyba/admin/:gameId': {
+    'controller': 'admin',
+    'action': 'createOutcome'
   }
 
   /*

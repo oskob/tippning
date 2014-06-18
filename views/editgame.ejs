@@ -1,0 +1,10 @@
+<h3><%= game[0].getDate() %>/6 - <%= game[1] %> - <%= game[2] %></h3>
+<form method="post">
+<input type="hidden" name="gameId" value="<%= game.gameId %>">
+<select name="outcome">
+	<option value="1">1</option>
+	<option value="x">X</option>
+	<option value="2">2</option>
+</select>
+<input type="submit">
+</form>

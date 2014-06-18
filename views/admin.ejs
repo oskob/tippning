@@ -1,0 +1,9 @@
+<% for(var gameId in games) { %>
+
+<% var game = games[gameId]; %>
+
+<a href="/xxyba/admin/<%= gameId %>"><%= game[0].getDate() %>/6 - <%= game[1] %> - <%= game[2] %></a>
+
+<br>
+
+<% } %>
